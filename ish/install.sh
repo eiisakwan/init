@@ -3,45 +3,30 @@
 # Downloads: https://raw.githubusercontent.com/eiisakwan/init/master/ish/install.sh
 # install scripts for ish set up
 
-echo "---> Runnning $0. Initialiasing ish "
-
-# to use alpine repositories for ish app
-cat > /etc/apk/repositories << EOF; $(echo)
-http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
-http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
-EOF
-sed -i -e '/http:\/\/apk.ish.app/d' /etc/apk/repositories
-apk update
-
-# colour_prompt
-wget https://gist.githubusercontent.com/elkwan/efa18a226fbc5a757d89ea7c0d4a1a5a/raw/854258806ae0b2ea9a15dabc753377a5bdcc7cca/color_prompt.sh
-cat color_prompt.sh > /etc/profile.d/color_prompt.sh.root && ln -s /etc/profile.d/color_prompt.sh.root /etc/profile.d/color_prompt.sh 
-
-apk add bash bash-completion
-
-# bash at login
-sed -i 's|root:x:0:0:root:/root:/bin/ash|root:x:0:0:root:/root:/bin/bash|g' /etc/passwd
-
-apk openssh-keygen rsync coreutils
-
 setupBash()
 {
+  printf \n "setting up bash dir.."
+  [ -d .bash ] || mkdir .bash
+  
   # bash file
   ln -sfn .bash/.bashrc
   ln -sfn .bash/.bash_profile
   ln -sfn .bash/.bash_functions
   ln -sfn .bash/.bash_aliases
-  ln -sfn .bash/.wp_aliases
-  ln -sfn .bash/.wp_functions
+  
+  # bash functions folder
+  [ -d .bash/functions ] || mkdir .bash/functions
   
   # bash history
+  [ -d .bash/history ] || mkdir .bash/history
   ln -sfn .bash/history/.bash_hostory_$USER@${HOSTNAME%.*} .bash_history
+  echo "# ${HOSTNAME}" > .bash_history
 }
 
 setupSsh()
 {
   echo "initizatiing ssh $0: "
-  apk add openssh
+  apk add openssh openssh-keygen
   ssh-keygen -A
   SSH_ENV=$HOME/.ssh/environment
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
@@ -73,10 +58,10 @@ setupGit()
 
 setupApk()
 {
-  apk add bash bash-completion openssh sudo nano rsync util-linux 
+  apk update
   
   echo "apk install core app..."
-  apk add openssh openssh-keygen rsync coreutils
+  apk add openssh openssh-keygen rsync coreutils util-linux sudo
   apk add lsof less nano curl wget
   export PAGER=less
   
@@ -119,6 +104,23 @@ setupApk()
   python3 -m ensurepip
   apk update 
 }
+
+echo "---> Runnning $0. Initialiasing ish "
+# to use alpine repositories for ish app
+cat > /etc/apk/repositories << EOF; $(echo)
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+EOF
+sed -i -e '/http:\/\/apk.ish.app/d' /etc/apk/repositories
+apk update
+
+# colour_prompt
+wget https://gist.githubusercontent.com/elkwan/efa18a226fbc5a757d89ea7c0d4a1a5a/raw/854258806ae0b2ea9a15dabc753377a5bdcc7cca/color_prompt.sh
+cat color_prompt.sh > /etc/profile.d/color_prompt.sh.root && ln -s /etc/profile.d/color_prompt.sh.root /etc/profile.d/color_prompt.sh 
+
+# bash at login
+apk add bash bash-completion
+sed -i 's|root:x:0:0:root:/root:/bin/ash|root:x:0:0:root:/root:/bin/bash|g' /etc/passwd
 
 setupBash
 setupSsh

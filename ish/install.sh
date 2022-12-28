@@ -118,4 +118,4 @@ setupApk()
 setupApk
 setupBash
 setupSsh
-setupgit
+setupGit

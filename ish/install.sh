@@ -43,19 +43,22 @@ downloadBash()
 setupSsh()
 {
   echo "initizatiing ssh $0: "
+  cd $HOME
   apk add openssh openssh-keygen
   ssh-keygen -A
   SSH_ENV=$HOME/.ssh/environment
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
   
-  printf \n "generating ssh key.... "
-  [ -f .ssh/id_rsa.pub ] || ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa
-  [ -f .ssh/id_ed25519.pub ] || ssh-keygen -t ed25519 -C "${HOSTNAME%.*}@icloud.com" -f .ssh/id_ed25519
-  echo done
-
   printf \n "checking ssh dir... "
   [ -d .ssh ] || mkdir .ssh
   [ -d .ssh/.keys ] || mkdir .ssh/.keys
+  touch .ssh/config
+  touch .ssh/environment
+  echo done
+  
+  printf \n "generating ssh key.... "
+  [ -f .ssh/id_rsa.pub ] || ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa
+  [ -f .ssh/id_ed25519.pub ] || ssh-keygen -t ed25519 -C "$HOSTNAME@icloud.com" -f .ssh/id_ed25519
   echo done
   
   printf \n "checking file permission... "
@@ -132,8 +135,10 @@ sed -i -e '/http:\/\/apk.ish.app/d' /etc/apk/repositories
 apk update
 
 # colour_prompt
+cd /etc/profile.d
 wget https://gist.githubusercontent.com/elkwan/efa18a226fbc5a757d89ea7c0d4a1a5a/raw/854258806ae0b2ea9a15dabc753377a5bdcc7cca/color_prompt.sh
-cat color_prompt.sh > /etc/profile.d/color_prompt.sh.root && ln -s /etc/profile.d/color_prompt.sh.root /etc/profile.d/color_prompt.sh 
+ln -sfn /etc/profile.d/color_prompt.sh.root /etc/profile.d/color_prompt.sh
+cd 
 
 # bash at login
 apk add bash bash-completion

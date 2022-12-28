@@ -34,6 +34,7 @@ downloadBash()
   wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/functions/os.sh
   wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/functions/menu.sh
   wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/functions/prompt.sh
+  cd
 }
 
 setupSsh()

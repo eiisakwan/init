@@ -1,11 +1,10 @@
 #!/bin/sh
-
 # Author: Elisa Kwan https://github.com/elisakwan/init/ish
 # Downloads: https://raw.githubusercontent.com/eiisakwan/init/master/ish/install.sh
 # install scripts for ish set up
 
-# default set up
-op "Runnning $0. Initialiasing ish "
+echo "---> Runnning $0. Initialiasing ish "
+
 # to use alpine repositories for ish app
 cat > /etc/apk/repositories << EOF; $(echo)
 http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
@@ -24,15 +23,15 @@ sed -i 's|root:x:0:0:root:/root:/bin/ash|root:x:0:0:root:/root:/bin/bash|g' /etc
 setupBash()
 {
   # bash file
-ln -sfn .bash/.bashrc
-ln -sfn .bash/.bash_profile
-ln -sfn .bash/.bash_functions
-ln -sfn .bash/.bash_aliases
-ln -sfn .bash/.wp_aliases
-ln -sfn .bash/.wp_functions
-
-# bash history
-ln -sfn .bash/history/.bash_hostory_$USER@${HOSTNAME%.*} .bash_history
+  ln -sfn .bash/.bashrc
+  ln -sfn .bash/.bash_profile
+  ln -sfn .bash/.bash_functions
+  ln -sfn .bash/.bash_aliases
+  ln -sfn .bash/.wp_aliases
+  ln -sfn .bash/.wp_functions
+  
+  # bash history
+  ln -sfn .bash/history/.bash_hostory_$USER@${HOSTNAME%.*} .bash_history
 }
 
 setupSsh()
@@ -61,9 +60,9 @@ setupSsh()
 setupGit() 
 {
   printf \n "seting up for git ...."
-apk add git
-git config --global user.email ${HOSTNAME}@icloud.com
-git config -- global user.name ${HOSTNAME}
+  apk add git
+  git config --global user.email ${HOSTNAME}@icloud.com
+  git config -- global user.name ${HOSTNAME}
   echo done
 }
 

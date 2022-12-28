@@ -2,33 +2,32 @@
 
 ## OS ##
 os()
-{ # Modified snippet from Neofetch.
-case "$OSTYPE" in
+{
+  case "$OSTYPE" in
     "darwin"*)
         : "mac"
     ;;
-
+  
     "linux")
         : "linux"
     ;;
-
+  
     "linux-musl"*)
         : "ish"
     ;;
-
+  
     "cygwin" | "msys" | "win32")
         : "Windows"
     ;;
-
+  
     *)
         printf '%s\n' "Unknown OS detected, aborting..." >&2
         exit 1
     ;;
-esac
-
-# Finally, set the variable.
-os="$_"
-printf '%s\n' os: $os
+  esac
+  
+  # Finally, set the variable.
+  os="$_"
 }
 os
 
@@ -41,4 +40,3 @@ fi
 if [ -f ~/.${os}_aliases ]; then
   source ~/.${os}_aliases
 fi
-}

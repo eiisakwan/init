@@ -1,5 +1,7 @@
-#!/usr/bin/env bash
-# Author: Elisa Kwan https://github.com/elisakwan 
+#!/bin/sh
+
+# Author: Elisa Kwan https://github.com/elisakwan/init/ish
+# Downloads: https://raw.githubusercontent.com/eiisakwan/init/master/ish/install.sh
 # install scripts for ish set up
 
 # default set up

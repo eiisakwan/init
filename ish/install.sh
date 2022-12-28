@@ -17,8 +17,12 @@ apk update
 wget https://gist.githubusercontent.com/elkwan/efa18a226fbc5a757d89ea7c0d4a1a5a/raw/854258806ae0b2ea9a15dabc753377a5bdcc7cca/color_prompt.sh
 cat color_prompt.sh > /etc/profile.d/color_prompt.sh.root && ln -s /etc/profile.d/color_prompt.sh.root /etc/profile.d/color_prompt.sh 
 
+apk add bash bash-completion
+
 # bash at login
 sed -i 's|root:x:0:0:root:/root:/bin/ash|root:x:0:0:root:/root:/bin/bash|g' /etc/passwd
+
+apk openssh-keygen rsync coreutils
 
 setupBash()
 {
@@ -37,11 +41,11 @@ setupBash()
 setupSsh()
 {
   echo "initizatiing ssh $0: "
-  printf \n  "setting ssh env... "
+  apk add openssh
   ssh-keygen -A
   SSH_ENV=$HOME/.ssh/environment
-  echo "done"
-
+  echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
+  
   printf \n "generating ssh key.... "
   [ -f .ssh/id_rsa.pub ] || ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa
   [ -f .ssh/id_ed25519.pub ] || ssh-keygen -t ed25519 -C "${HOSTNAME%.*}@icloud.com" -f .ssh/id_ed25519
@@ -53,7 +57,8 @@ setupSsh()
   echo done
   
   printf \n "checking file permission... "
-  chmod 644 .ssh/*; chmod 600 .ssh/.keys/*
+  chmod -R 600 .ssh
+  chmod 644 .ssh/config
   echo done
 }
 
@@ -115,7 +120,7 @@ setupApk()
   apk update 
 }
 
-setupApk
 setupBash
 setupSsh
 setupGit
+setupApk

@@ -1,6 +1,7 @@
 #!/bin/sh
 # Author: Elisa Kwan https://github.com/elisakwan/init/ish
 # Downloads: https://raw.githubusercontent.com/eiisakwan/init/master/ish/install.sh
+# Install: wget https://raw.githubusercontent.com/eiisakwan/init/master/ish/install.sh -O- | sh
 # install scripts for ish set up
 
 setupBash()
@@ -25,6 +26,7 @@ setupBash()
 
 downloadBash()
 {
+  printf \n "Downloading bash file.."
   cd ~/.bash
   wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/.bash_aliases
   wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/.bash_functions
@@ -35,6 +37,7 @@ downloadBash()
   wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/functions/menu.sh
   wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/functions/prompt.sh
   cd
+  echo done
 }
 
 setupSsh()

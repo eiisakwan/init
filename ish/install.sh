@@ -1,9 +1,10 @@
-#!/usr/bin/env bash
-# Author: Elisa Kwan https://github.com/elisakwan 
+#!/bin/sh
+# Author: Elisa Kwan https://github.com/elisakwan/init/ish
+# Downloads: https://raw.githubusercontent.com/eiisakwan/init/master/ish/install.sh
 # install scripts for ish set up
 
-# default set up
-op "Runnning $0. Initialiasing ish "
+echo "---> Runnning $0. Initialiasing ish "
+
 # to use alpine repositories for ish app
 cat > /etc/apk/repositories << EOF; $(echo)
 http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
@@ -22,15 +23,15 @@ sed -i 's|root:x:0:0:root:/root:/bin/ash|root:x:0:0:root:/root:/bin/bash|g' /etc
 setupBash()
 {
   # bash file
-ln -sfn .bash/.bashrc
-ln -sfn .bash/.bash_profile
-ln -sfn .bash/.bash_functions
-ln -sfn .bash/.bash_aliases
-ln -sfn .bash/.wp_aliases
-ln -sfn .bash/.wp_functions
-
-# bash history
-ln -sfn .bash/history/.bash_hostory_$USER@${HOSTNAME%.*} .bash_history
+  ln -sfn .bash/.bashrc
+  ln -sfn .bash/.bash_profile
+  ln -sfn .bash/.bash_functions
+  ln -sfn .bash/.bash_aliases
+  ln -sfn .bash/.wp_aliases
+  ln -sfn .bash/.wp_functions
+  
+  # bash history
+  ln -sfn .bash/history/.bash_hostory_$USER@${HOSTNAME%.*} .bash_history
 }
 
 setupSsh()
@@ -59,9 +60,9 @@ setupSsh()
 setupGit() 
 {
   printf \n "seting up for git ...."
-apk add git
-git config --global user.email ${HOSTNAME}@icloud.com
-git config -- global user.name ${HOSTNAME}
+  apk add git
+  git config --global user.email ${HOSTNAME}@icloud.com
+  git config -- global user.name ${HOSTNAME}
   echo done
 }
 
@@ -96,7 +97,7 @@ setupApk()
   apk update && apk upgrade
   apk add man-pages mandoc docs
 
- echo "installing php"
+  echo "installing php"
   apk add php7-dba php7-sqlite3 php7-mysqli php7-mysqlnd php7-pgsql php7-pdo_dblib php7-pdo_odbc php7-pdo_pgsql php7-pdo_sqlite 
 
   apk add php7-snmp php7-soap php7-ldap php7-pcntl php7-pear php7-shmop php7-wddx php7-cgi php7-pdo php7-snmp php7-tokenizer 

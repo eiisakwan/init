@@ -23,6 +23,19 @@ setupBash()
   echo "# ${HOSTNAME}" > .bash_history
 }
 
+downloadBash()
+{
+  cd ~/.bash
+  wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/.bash_aliases
+  wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/.bash_functions
+  wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/.bash_profile
+  wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/.bashrc
+  cd ~/.bash/functions
+  wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/functions/os.sh
+  wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/functions/menu.sh
+  wget https://raw.githubusercontent.com/eiisakwan/init/master/bash/skel/functions/prompt.sh
+}
+
 setupSsh()
 {
   echo "initizatiing ssh $0: "
@@ -123,6 +136,7 @@ apk add bash bash-completion
 sed -i 's|root:x:0:0:root:/root:/bin/ash|root:x:0:0:root:/root:/bin/bash|g' /etc/passwd
 
 setupBash
+downloadBash
 setupSsh
 setupGit
 setupApk

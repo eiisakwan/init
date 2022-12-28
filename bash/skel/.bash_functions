@@ -41,9 +41,6 @@ else
 fi
 }
 
-# scripts path
-shdir() { shdir=$HOME/Scripts; cd $shdir; }
-
 # get innodes
 inod() { find $1 printf "%h\n" | cut -d/ -f-2 | sort | uniq -c | sort -rn; }
 

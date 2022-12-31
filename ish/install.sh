@@ -47,8 +47,8 @@ setupSsh()
   apk add openss
   SSH_ENV=$HOME/.ssh/environment
   
-  read -p "set up password for root? [y/N]:"
-  [ $REPLY = N ] || passwd
+  #read -p "set up password for root? [y/N]:"
+  #[ $REPLY = N ] || passwd
   
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
   sed -i "s/Port 22/Port 22000/q" /etc/ssh/sshd_config
@@ -117,12 +117,9 @@ setupApk()
   apk add man-pages mandoc docs
 
   echo "installing php...."
-  read -p "confirm: [y/N]"
-  if [ $REPLY !=N ]; then
-    apk add php7-dba php7-sqlite3 php7-mysqli php7-mysqlnd php7-pgsql php7-pdo_dblib php7-pdo_odbc php7-pdo_pgsql php7-pdo_sqlite 
+  apk add php7-dba php7-sqlite3 php7-mysqli php7-mysqlnd php7-pgsql php7-pdo_dblib php7-pdo_odbc php7-pdo_pgsql php7-pdo_sqlite 
 
-    apk add php7-snmp php7-soap php7-ldap php7-pcntl php7-pear php7-shmop php7-wddx php7-cgi php7-pdo php7-snmp php7-tokenizer
-  fi
+  apk add php7-snmp php7-soap php7-ldap php7-pcntl php7-pear php7-shmop php7-wddx php7-cgi php7-pdo php7-snmp php7-tokenizer
   
   echo "Enabling OpenRC & Start Services When iSH App Starts"
   apk add openrc

@@ -42,7 +42,7 @@ downloadBash()
 
 setupSsh()
 {
-  echo "initizatiing ssh $0: "
+  echo "initizatiing ssh $0... "
   cd $HOME
   apk add openssh openssh-keygen
   ssh-keygen -A

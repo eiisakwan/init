@@ -48,8 +48,8 @@ setupSsh()
   ssh-keygen -A
   SSH_ENV=$HOME/.ssh/environment
   
-  read -p "set up password for root?"
-  [ ! -z $REPLY ] || passwd
+  read -p "set up password for root? [y/N]:"
+  [ $REPLY = N ] || passwd
   
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
   sed -i "s/Port 22/Port 22000/q" /etc/ssh/sshd_config

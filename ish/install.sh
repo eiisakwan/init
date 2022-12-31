@@ -137,8 +137,9 @@ setupApk()
   apk update 
 }
 
-echo "---> Runnning $0. Initialiasing ish "
-echo "-------------------------------------"
+echo "-------------------------------------------"
+echo "---> Running install.sh. Initialiasing ish."
+echo "-------------------------------------------"
 
 # run in background
 echo "Enabling ish to run in background...."

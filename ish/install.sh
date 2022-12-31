@@ -47,7 +47,13 @@ setupSsh()
   apk add openssh openssh-keygen
   ssh-keygen -A
   SSH_ENV=$HOME/.ssh/environment
+  
+  read -p "set up password for root?"
+  [ ! -z $REPLY ] || passwd
+  
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
+  sed -i "s/Port 22/Port 22000/q" /etc/ssh/sshd_config
+  /usr/sbin/sshd
   
   printf \n "checking ssh dir... "
   [ -d .ssh ] || mkdir .ssh
@@ -62,8 +68,8 @@ setupSsh()
   echo done
   
   printf \n "checking file permission... "
-  chmod -R 600 .ssh
-  chmod 644 .ssh/config
+  chmod -R 600 $HOME/.ssh
+  chmod 644 $HOME/.ssh/config
   echo done
 }
 

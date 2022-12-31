@@ -20,7 +20,7 @@ setupBash()
   
   # bash history
   [ -d .bash/history ] || mkdir .bash/history
-  ln -sfn .bash/history/.bash_hostory_$USER@${HOSTNAME%.*} .bash_history
+  ln -sfn .bash/history/.bash_history_$USER@${HOSTNAME%.*} .bash_history
   echo "# ${HOSTNAME}" > .bash_history
 }
 

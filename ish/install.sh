@@ -88,31 +88,37 @@ setupApk()
   echo "installing nanro..."
   curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
   
-  echo "adding essential pkg..."
-  apk update && apk upgrade
-  apk add fish tree emacs meson make 
-  apk add s6 nextcloud ncurses-terminfo-base 
-  apk add llvm markdown mosh mosh-server 
-  apk add colord samba alpine-conf
-  apk add libgit2-dev cmake syntax-highlighting 
-  apk add gzip apache2 htop python3
-  apk add sed attr dialog grep exa
-  apk update && apk upgrade
-  apk add util-linux pciutils 
-  apk add usbutils binutils findutils readline
-  apk add ruby ruby-dev build-base ruby-json
-  apk add perl dpkg openssl
-  apk add stunnel links
+  echo "adding alpine essential pkg..."
+  read -p "Confirm?: [y/N]"
+  [ $REPLY = N ] || {
+    apk update && apk upgrade
+    apk add fish tree emacs meson make 
+    apk add s6 nextcloud ncurses-terminfo-base 
+    apk add llvm markdown mosh mosh-server 
+    apk add colord samba alpine-conf
+    apk add libgit2-dev cmake syntax-highlighting 
+    apk add gzip apache2 htop python3
+    apk add sed attr dialog grep exa
+    apk update && apk upgrade
+    apk add util-linux pciutils 
+    apk add usbutils binutils findutils readline
+    apk add ruby ruby-dev build-base ruby-json
+    apk add perl dpkg openssl
+    apk add stunnel links
+    } 
   
   apk update && apk upgrade
   apk add man-pages mandoc docs
 
-  echo "installing php"
+  echo "installing php...."
+  read -p "confirm: [y/N]
+  [ $REPLY = N ] || { 
   apk add php7-dba php7-sqlite3 php7-mysqli php7-mysqlnd php7-pgsql php7-pdo_dblib php7-pdo_odbc php7-pdo_pgsql php7-pdo_sqlite 
 
-  apk add php7-snmp php7-soap php7-ldap php7-pcntl php7-pear php7-shmop php7-wddx php7-cgi php7-pdo php7-snmp php7-tokenizer 
+  apk add php7-snmp php7-soap php7-ldap php7-pcntl php7-pear php7-shmop php7-wddx php7-cgi php7-pdo php7-snmp php7-tokenizer
+  }
   
-  echo "Enable OpenRC & Start Services When iSH App Starts"
+  echo "Enabling OpenRC & Start Services When iSH App Starts"
   apk add openrc
   cat /mnt/ish/etc/inittab > /etc/inittab
   rc-update add sshd

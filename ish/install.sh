@@ -132,6 +132,12 @@ setupApk()
 }
 
 echo "---> Runnning $0. Initialiasing ish "
+echo "-------------------------------------"
+
+# run in background
+echo "Enabling ish to run in background...."
+cat /dev/location > /dev/null &
+
 # to use alpine repositories for ish app
 cat > /etc/apk/repositories << EOF; $(echo)
 http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main

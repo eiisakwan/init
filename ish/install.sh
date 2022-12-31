@@ -44,8 +44,7 @@ setupSsh()
 {
   echo "initizatiing ssh $0... "
   cd $HOME
-  apk add openssh openssh-keygen
-  ssh-keygen -A
+  apk add openss
   SSH_ENV=$HOME/.ssh/environment
   
   read -p "set up password for root? [y/N]:"
@@ -168,3 +167,5 @@ downloadBash
 setupSsh
 setupGit
 setupApk
+
+ssh-keygen -A

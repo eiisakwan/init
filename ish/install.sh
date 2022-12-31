@@ -95,8 +95,6 @@ setupApk()
   curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
   
   echo "adding alpine essential pkg..."
-  read -p "Confirm?: [y/N]"
-  if [ $REPLY != N ]; then
     apk update && apk upgrade
     apk add fish tree emacs meson make 
     apk add s6 nextcloud ncurses-terminfo-base 
@@ -111,7 +109,6 @@ setupApk()
     apk add ruby ruby-dev build-base ruby-json
     apk add perl dpkg openssl
     apk add stunnel links
-  fi
   
   apk update && apk upgrade
   apk add man-pages mandoc docs

@@ -59,7 +59,7 @@ setupSsh()
   echo done
   
   printf \n "generating ssh key.... "
-  [ -f .ssh/id_rsa ] || ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa
+  [ -f .ssh/id_rsa ] || ssh-keygen -t rsa -b 2048 -f .ssh/id_rsa
   [ -f .ssh/id_ed25519 ] || ssh-keygen -t ed25519 -C "$HOSTNAME@icloud.com" -f .ssh/id_ed25519
   echo done
   
@@ -119,10 +119,9 @@ alpineNewbie() {
   apk update && apk upgrade
 	apk add fish emacs meson make
   apk add s6 nextcloud ncurses-terminfo-base 
-  apk add llvm  mosh mosh-server 
+  apk add llvm mosh mosh-server 
   apk add colord samba alpine-conf
   apk add libgit2-dev cmake syntax-highlighting 
-  apk update && apk upgrade
 	apk add pciutils usbutils binutils findutils util-linux
 	apk add ruby-dev ruby-json
   apk add perl openssl lsof dialog exa

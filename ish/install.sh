@@ -95,7 +95,7 @@ setupApk()
   echo "installing php...."
   apk add php php-dba php-sqlite3 php-mysqli php-mysqlnd php-pgsql php-pdo_dblib php-pdo_odbc php-pdo_pgsql php-pdo_sqlite 
 
-  apk add php-snmp php-soap php-ldap php-pcntl php-pear php-shmop php-wddx php-cgi php-pdo php-snmp php-tokenizer
+  apk add php-snmp php-soap php-ldap php-pcntl php-pear php-shmop php-cgi php-pdo php-snmp php-tokenizer
   
   echo "Enabling OpenRC & Start Services When iSH App Starts"
   apk add openrc

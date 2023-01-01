@@ -47,11 +47,8 @@ setupSsh()
   apk add openssh openssh-keygen
   SSH_ENV=$HOME/.ssh/environment
   
-  #read -p "set up password for root? [y/N]:"
-  #[ $REPLY = N ] || passwd
-  
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
-  sed -i "s/Port 22/Port 22000/q" /etc/ssh/sshd_config
+  sed -i "s/#Port 22/Port 22000/g" /etc/ssh/sshd_config
   /usr/sbin/sshd
   
   printf \n "checking ssh dir... "
@@ -62,8 +59,8 @@ setupSsh()
   echo done
   
   printf \n "generating ssh key.... "
-  [ -f .ssh/id_rsa.pub ] || ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa
-  [ -f .ssh/id_ed25519.pub ] || ssh-keygen -t ed25519 -C "$HOSTNAME@icloud.com" -f .ssh/id_ed25519
+  [ -f .ssh/id_rsa ] || ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa
+  [ -f .ssh/id_ed25519 ] || ssh-keygen -t ed25519 -C "$HOSTNAME@icloud.com" -f .ssh/id_ed25519
   echo done
   
   printf \n "checking file permission... "
@@ -78,6 +75,13 @@ setupGit()
   apk add git
   git config --global user.email ${HOSTNAME}@icloud.com
   git config -- global user.name ${HOSTNAME}
+  git config --global core.symlinks true
+  git config --global color.ui true
+	git config --global --add --bool push.autoSetupRemote true
+	git config --global push.default current
+	git config --global init.defaultBranch master
+  git config --global pull.rebase true
+  git config --global rebase.autoStash true
   echo done
 }
 

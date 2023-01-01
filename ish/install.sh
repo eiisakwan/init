@@ -44,7 +44,7 @@ setupSsh()
 {
   echo "initizatiing ssh $0... "
   cd $HOME
-  apk add openss
+  aapk add openssh openssh-keygen
   SSH_ENV=$HOME/.ssh/environment
   
   #read -p "set up password for root? [y/N]:"
@@ -62,7 +62,6 @@ setupSsh()
   echo done
   
   printf \n "generating ssh key.... "
-  apk add openssh-keygen
   [ -f .ssh/id_rsa.pub ] || ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa
   [ -f .ssh/id_ed25519.pub ] || ssh-keygen -t ed25519 -C "$HOSTNAME@icloud.com" -f .ssh/id_ed25519
   echo done
@@ -84,39 +83,30 @@ setupGit()
 
 setupApk()
 {
-  apk update
-  
   echo "apk install core app..."
-  apk add openssh openssh-keygen rsync coreutils util-linux sudo
+  apk update
+  rsync coreutils util-linux sudo tree
   apk add lsof less nano curl wget
+  apk add gzip apache2 python3
+  apk add sed attr dialog grep exa
+  apk add man-pages mandoc docs
   export PAGER=less
   
   echo "installing nanro..."
   curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
   
-  echo "adding alpine essential pkg..."
-    apk update && apk upgrade
-    apk add fish tree emacs meson make 
-    apk add s6 nextcloud ncurses-terminfo-base 
-    apk add llvm markdown mosh mosh-server 
-    apk add colord samba alpine-conf
-    apk add libgit2-dev cmake syntax-highlighting 
-    apk add gzip apache2 htop python3
-    apk add sed attr dialog grep exa
-    apk update && apk upgrade
-    apk add util-linux pciutils 
-    apk add usbutils binutils findutils readline
-    apk add ruby ruby-dev build-base ruby-json
-    apk add perl dpkg openssl
-    apk add stunnel links
-  
   apk update && apk upgrade
-  apk add man-pages mandoc docs
-
+	apk add util-linux pciutils 
+  apk add usbutils binutils findutils readline
+	apk add ruby ruby-dev build-base ruby-json
+  apk add perl openssl
+  apk add stunnel links
+  apk update && apk upgrade
+ 
   echo "installing php...."
-  apk add php7-dba php7-sqlite3 php7-mysqli php7-mysqlnd php7-pgsql php7-pdo_dblib php7-pdo_odbc php7-pdo_pgsql php7-pdo_sqlite 
+  apk add php php-dba php-sqlite3 php-mysqli php-mysqlnd php-pgsql php-pdo_dblib php-pdo_odbc php-pdo_pgsql php-pdo_sqlite 
 
-  apk add php7-snmp php7-soap php7-ldap php7-pcntl php7-pear php7-shmop php7-wddx php7-cgi php7-pdo php7-snmp php7-tokenizer
+  apk add php-snmp php-soap php-ldap php-pcntl php-pear php-shmop php-wddx php-cgi php-pdo php-snmp php-tokenizer
   
   echo "Enabling OpenRC & Start Services When iSH App Starts"
   apk add openrc
@@ -129,6 +119,16 @@ setupApk()
   # pip
   python3 -m ensurepip
   apk update 
+}
+
+alpineNewbie() {
+  echo "adding alpine essential pkg..."
+  apk update && apk upgrade
+	apk add fish emacs meson make
+  apk add s6 nextcloud ncurses-terminfo-base 
+  apk add llvm markdown mosh mosh-server 
+  apk add colord samba alpine-conf
+  apk add libgit2-dev cmake syntax-highlighting 
 }
 
 echo "-------------------------------------------"
@@ -159,6 +159,7 @@ sed -i 's|root:x:0:0:root:/root:/bin/ash|root:x:0:0:root:/root:/bin/bash|g' /etc
 
 setupBash
 downloadBash
+bash
 setupSsh
 setupGit
 setupApk

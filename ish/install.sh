@@ -85,10 +85,13 @@ setupApk()
 {
   echo "apk install core app..."
   apk update
-  rsync coreutils util-linux sudo tree
-  apk add lsof less nano curl wget
-  apk add gzip apache2 python3
-  apk add sed attr dialog grep exa
+  apk add git grep sed coreutils gzip attr docs ruby bash bash-completion yarn nano curl
+  apk add openssh rsync sudo tree less readline
+  
+  apk add util-linux
+  apk add lsof
+  apk add apache2 python3
+  apk add dialog exa
   apk add man-pages mandoc docs
   export PAGER=less
   
@@ -96,9 +99,8 @@ setupApk()
   curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
   
   apk update && apk upgrade
-	apk add util-linux pciutils 
-  apk add usbutils binutils findutils readline
-	apk add ruby ruby-dev build-base ruby-json
+	apk add pciutils usbutils binutils findutils 
+	apk add ruby-dev build-base ruby-json
   apk add perl openssl
   apk add stunnel links
   apk update && apk upgrade

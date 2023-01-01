@@ -44,7 +44,7 @@ setupSsh()
 {
   echo "initizatiing ssh $0... "
   cd $HOME
-  aapk add openssh openssh-keygen
+  apk add openssh openssh-keygen
   SSH_ENV=$HOME/.ssh/environment
   
   #read -p "set up password for root? [y/N]:"
@@ -86,25 +86,12 @@ setupApk()
   echo "apk install core app..."
   apk update
   apk add git grep sed coreutils gzip attr docs ruby bash bash-completion yarn nano curl
-  apk add openssh rsync sudo tree less readline
-  
-  apk add util-linux
-  apk add lsof
-  apk add apache2 python3
-  apk add dialog exa
-  apk add man-pages mandoc docs
+  apk add openssh rsync sudo tree less readline man-pages mandoc docs apache2 python3 markdown
   export PAGER=less
   
   echo "installing nanro..."
   curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
   
-  apk update && apk upgrade
-	apk add pciutils usbutils binutils findutils 
-	apk add ruby-dev build-base ruby-json
-  apk add perl openssl
-  apk add stunnel links
-  apk update && apk upgrade
- 
   echo "installing php...."
   apk add php php-dba php-sqlite3 php-mysqli php-mysqlnd php-pgsql php-pdo_dblib php-pdo_odbc php-pdo_pgsql php-pdo_sqlite 
 
@@ -120,7 +107,7 @@ setupApk()
   
   # pip
   python3 -m ensurepip
-  apk update 
+  apk update && apk upgrade
 }
 
 alpineNewbie() {
@@ -128,9 +115,15 @@ alpineNewbie() {
   apk update && apk upgrade
 	apk add fish emacs meson make
   apk add s6 nextcloud ncurses-terminfo-base 
-  apk add llvm markdown mosh mosh-server 
+  apk add llvm  mosh mosh-server 
   apk add colord samba alpine-conf
   apk add libgit2-dev cmake syntax-highlighting 
+  apk update && apk upgrade
+	apk add pciutils usbutils binutils findutils util-linux
+	apk add ruby-dev ruby-json
+  apk add perl openssl lsof dialog exa
+  apk add stunnel links
+  apk update && apk upgrade
 }
 
 echo "-------------------------------------------"
